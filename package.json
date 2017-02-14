@@ -1,0 +1,28 @@
+{
+  "name": "raspberries-api",
+  "version": "1.0.0",
+  "description": "Web API for raspberries",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArthurGurinovich/raspberries-api.git"
+  },
+  "keywords": [
+    "API"
+  ],
+  "author": "Arthur Gurinovich",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArthurGurinovich/raspberries-api/issues"
+  },
+  "homepage": "https://github.com/ArthurGurinovich/raspberries-api#readme",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "cors": "^2.8.1",
+    "express": "^4.14.1",
+    "mongodb": "^2.2.22"
+  }
+}
