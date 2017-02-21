@@ -4,7 +4,10 @@ var bodyParser = require('body-parser');
 var MongoClient = require('mongodb').MongoClient;
 var ObjectID = require('mongodb').ObjectID;
 var db = require('./db');
+var worksController = require('./controllers/works');
 
+// API urls
+var uriW = '/works';
 
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -16,77 +19,19 @@ var options = {
   credentials: true,
   maxAge: 3600
 };
-
-
-
-
-app.options(['/works','/works/:id'], cors(options));
+app.options([uriW,uriW + '/:id'], cors(options));
 app.get('/', function(req, res){
-	res.send('Hello from API!');
+	res.send('API started!');
 })
 
 
-// Типы работы
-app.get('/works', function(req, res){
-	db.get().collection('works').find().toArray(function(err, docs){
-		if(err){
-			console.log(err);
-			return res.sendStatus(500);
-		}
-		res.send(docs);
-	});
-})
-app.get('/works/:id', function(req, res){
-	db.get().collection('works').findOne({_id: ObjectID(req.params.id)}, function(err, docs){
-		if(err){
-			console.log(err);
-			return res.sendStatus(500);
-		}
-		res.send(docs);
-	});
-});
+// API Works
 
-app.post('/works', function(req, res){
-	var work = {
-		title: req.body.title
-	};
-	db.get().collection('works').insert(work, function(err, result){
-		if(err){
-			console.log(err);
-			return res.sendStatus(500);
-		}
-		res.send(work);
-	})
-});
-
-app.put('/works/:id', function(req, res){
-	db.get().collection('works').updateOne(
-		{_id: ObjectID(req.params.id)},
-		{title: req.body.title},
-		function(err, result){
-			if(err){
-				console.log(err);
-				return res.sendStatus(500);
-			}
-			console.log(result);
-			res.sendStatus(200);
-		}
-	)
-});
-
-app.delete('/works/:id', function(req, res){
-	db.get().collection('works').deleteOne(
-		{_id: ObjectID(req.params.id)},
-		function(err, result){
-			if(err){
-				console.log(err);
-				return res.sendStatus(500);
-			}
-			console.log(result);
-			res.sendStatus(200);
-		}
-	)
-});
+app.get(uriW, worksController.all);
+app.get(uriW + '/:id', worksController.findById);
+app.post(uriW, worksController.create);
+app.put(uriW + '/:id', worksController.update);
+app.delete(uriW + '/:id', worksController.delete);
 
 
 
