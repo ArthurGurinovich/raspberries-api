@@ -25,7 +25,10 @@ exports.findById = function(req, res){
 exports.create = function(req, res){
 	var work = {
 		title: req.body.title,
-		status: req.body.status
+		status: req.body.status,
+		description: req.body.description,
+		date: req.body.date,
+		location: req.body.location
 	};
 	Works.create(work, function(err, result){
 		if(err){
@@ -40,7 +43,10 @@ exports.update = function(req, res){
 	var _id = req.params.id;
 	var _newData = {
 		title: req.body.title,
-		status: req.body.status
+		status: req.body.status,
+		description: req.body.description,
+		date: req.body.date,
+		location: req.body.location
 	}
 
 	Works.update(_id, _newData, function(err, result){

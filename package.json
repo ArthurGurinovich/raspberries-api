@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArthurGurinovich/raspberries-api.git"
+    "url": "https://github.com/heroku/node-js-getting-started"
   },
   "keywords": [
     "API"
@@ -25,5 +25,9 @@
     "cors": "^2.8.1",
     "express": "^4.14.1",
     "mongodb": "^2.2.22"
+  },
+  "devDependencies": {
+    "cors": "^2.8.3",
+    "mongoose": "^4.8.6"
   }
 }

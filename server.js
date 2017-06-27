@@ -10,6 +10,7 @@ var worksController = require('./controllers/works');
 var uriW = '/works';
 
 var app = express();
+app.set('port', (process.env.PORT || 3015));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -19,14 +20,22 @@ var options = {
   credentials: true,
   maxAge: 3600
 };
-app.options([uriW,uriW + '/:id'], cors(options));
+
+
+
+app.all('*', function(req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+app.options([uriW, uriW + '/:id'], cors(options));
+
 app.get('/', function(req, res){
 	res.send('API started!');
 })
 
-
 // API Works
-
 app.get(uriW, worksController.all);
 app.get(uriW + '/:id', worksController.findById);
 app.post(uriW, worksController.create);
@@ -40,7 +49,7 @@ db.connect('mongodb://admin:admin@ds149489.mlab.com:49489/raspberriesapi', funct
 	if(err){
 		return console.log(err);
 	}
-	app.listen(3012, function(){
+	app.listen(app.get('port'), function(){
 		console.log('API started on Node.js + MongoDB');
 	});
 });
